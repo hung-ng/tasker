@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+
+.hover:hover {
+  background-color: gray;
+}
+
+.input-wrapper input {
+  border-radius: 5px;
+  margin: 5px 10px;
+  width: 350px;
+  height: 40px;
+}
+
+.input-wrapper select {
+  border-radius: 5px;
+  margin: 5px 10px;
+  width: 350px;
+  height: 40px;
+}
+
+.input-wrapper label {
+  font-size: large;
+}
+
+.error {
+  color: red;
+}
+
+.icon {
+  margin-bottom: 42.4px;
+  cursor: pointer;
+}
+
+.cursor{
+  cursor: pointer;
+}
