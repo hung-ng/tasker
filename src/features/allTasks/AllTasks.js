@@ -12,7 +12,6 @@ import MemberBar from "./MemberBar";
 import EditGroupNameModal from "./EditGroupNameModal";
 import firebase from 'firebase';
 
-
 const AllTasks = () => {
 
     const { currentUser } = useAuth()
@@ -89,16 +88,16 @@ const AllTasks = () => {
     const leaveGroup = (e) => {
         e.preventDefault();
         if (currentUser !== groupNameAndCreator.creator_id){
-            var cf = window.confirm("Leave this group ?")
-            if (cf === true) {
+            var cf1 = window.confirm("Leave this group ?")
+            if (cf1 === true) {
                 leave()
             }
         } else {
             if (allMembersId.length > 0) {
                 alert("Can not leave group")
             } else {
-                var cf = window.confirm("Leave this group ?")
-                if (cf === true) {
+                var cf2 = window.confirm("Leave this group ?")
+                if (cf2 === true) {
                     deleteGroup()
                 }
             }

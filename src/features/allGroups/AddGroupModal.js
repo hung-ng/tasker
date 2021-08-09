@@ -7,6 +7,7 @@ import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import { db } from '../../firebase/config';
 import { useAuth } from '../../firebase/Auth';
+import firebase from 'firebase';
 
 const AddGroupModal = (props) => {
 
@@ -47,13 +48,8 @@ const AddGroupModal = (props) => {
             })
             const group_id = res.id
 
-            const res1 = await db.collection("users").doc(currentUser).get()
-            const data = res1.data()
-            var group_idArr = data.groups_id
-            group_idArr.push(group_id)
-
             await db.collection("users").doc(currentUser).update({
-                groups_id: group_idArr
+                groups_id: firebase.firestore.FieldValue.arrayUnion(group_id)
             })
             setLoading(false)
             props.handleClose()

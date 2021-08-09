@@ -8,6 +8,7 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import { useParams } from 'react-router-dom';
 import { db } from '../../firebase/config';
 import { useAuth } from '../../firebase/Auth';
+import firebase from 'firebase';
 
 const AddMemberModal = (props) => {
 
@@ -54,16 +55,11 @@ const AddMemberModal = (props) => {
                     alert("User is already in group")
                     setLoading(false)
                 } else {
-                    member_idArr.push(email)
                     await db.collection("groups").doc(group_id).update({
-                        members_id: member_idArr
+                        members_id: firebase.firestore.FieldValue.arrayUnion(email)
                     })
-                    const res2 = await db.collection("users").doc(email).get()
-                    const data2 = res2.data()
-                    var group_idArr = data2.groups_id
-                    group_idArr.push(group_id)
                     await db.collection("users").doc(email).update({
-                        groups_id: group_idArr
+                        groups_id: firebase.firestore.FieldValue.arrayUnion(group_id)
                     })
                     props.handleClose()
                     setLoading(false)
