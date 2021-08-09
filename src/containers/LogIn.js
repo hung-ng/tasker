@@ -4,10 +4,8 @@ import { useAuth } from '../firebase/Auth';
 import './login.css'
 
 const LogIn = () => {
-    const [error, setError] = useState({
-        email: '',
-        password: ''
-    })
+    const [error, setError] = useState("")
+
     const [loading, setLoading] = useState(false)
 
     const { login, currentUser } = useAuth()
@@ -22,17 +20,11 @@ const LogIn = () => {
         };
 
         if (dataLogin.email.trim() === "") {
-            setError(prev => { return { ...prev, email: "Email is missing" } })
-        }
-        else {
-            setError(prev => { return { ...prev, email: "" } })
-        }
-
-        if (dataLogin.password.trim() === "") {
-            setError(prev => { return { ...prev, password: "Password is missing" } })
-        }
-        else {
-            setError(prev => { return { ...prev, password: "" } })
+            setError("Email is missing")
+        } else if (dataLogin.password.trim() === "") {
+            setError("Password is missing")
+        } else {
+            setError("")
         }
 
         if (dataLogin.email !== "" && dataLogin.password !== "") {
@@ -44,22 +36,20 @@ const LogIn = () => {
         try {
             setLoading(true)
             const response = await login(email, password);
-            if (response.user.emailVerified === false) {
-                alert("Your email is not verified");
-                setLoading(false);
+            if (response.user.emailVerified === true) {
+                history.go(0)
             }
             else {
-                history.push("/groups")
+                alert("Your email is not verified");
+                setLoading(false);
             }
         }
         catch (err) {
             if (err.code === 'auth/user-not-found'
                 || err.code === "auth/invalid-email"
+                || err.code === 'auth/wrong-password'
             ) {
-                setError(prev => { return { ...prev, email: "User not found" } })
-            }
-            else if (err.code === 'auth/wrong-password') {
-                setError(prev => { return { ...prev, password: "Password is incorrect" } })
+                setError("Email or password is incorrect")
             }
             setLoading(false)
         }
@@ -76,13 +66,12 @@ const LogIn = () => {
                     <h1>Tasker</h1>
                 </div>
                 <form id="login-form" onSubmit={loginController}>
+                    <div className="error">{error}</div>
                     <div className="input-wrapper">
                         <input type="email" name="email" placeholder="Email" />
-                        <div className="error">{error.email}</div>
                     </div>
                     <div className="input-wrapper">
                         <input type="password" name="password" placeholder="Password" />
-                        <div className="error">{error.password}</div>
                     </div>
                     <button className="btn btn-primary" disabled={loading} type="submit">
                         Login

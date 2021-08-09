@@ -88,9 +88,20 @@ const AllTasks = () => {
 
     const leaveGroup = (e) => {
         e.preventDefault();
-        var cf = window.confirm("Leave this group ?")
-        if (cf === true) {
-            leave()
+        if (currentUser !== groupNameAndCreator.creator_id){
+            var cf = window.confirm("Leave this group ?")
+            if (cf === true) {
+                leave()
+            }
+        } else {
+            if (allMembersId.length > 0) {
+                alert("Can not leave group")
+            } else {
+                var cf = window.confirm("Leave this group ?")
+                if (cf === true) {
+                    deleteGroup()
+                }
+            }
         }
     }
 
@@ -101,6 +112,14 @@ const AllTasks = () => {
         await db.collection("users").doc(currentUser).update({
             groups_id: firebase.firestore.FieldValue.arrayRemove(group_id)
         })
+        history.goBack()
+    }
+
+    const deleteGroup = async () => {
+        await db.collection("users").doc(currentUser).update({
+            groups_id: firebase.firestore.FieldValue.arrayRemove(group_id)
+        })
+        await db.collection("groups").doc(group_id).delete()
         history.goBack()
     }
 
@@ -176,9 +195,9 @@ const AllTasks = () => {
                 <div className="flex">
                     <div className="groupName">{groupNameAndCreator.groupName}</div>
                     <div onClick={editGroupName} title="Change group name" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
-                    {currentUser !== groupNameAndCreator.creator_id &&
+                    {/* {currentUser !== groupNameAndCreator.creator_id && */}
                         <div onClick={leaveGroup} title="Leave group" className="leaveIcon"><FontAwesomeIcon icon={faDoorOpen} size="1x" /></div>
-                    }
+                    {/* // } */}
                 </div>
                 <div className="creator">Creator: {groupNameAndCreator.creatorName}</div>
                 <div onClick={createTask} title="Add task" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>

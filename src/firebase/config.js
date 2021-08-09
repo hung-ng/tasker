@@ -3,12 +3,12 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 var firebaseConfig = {
-    apiKey: "AIzaSyAVQOMS36mJq_5K4Bc7Wc4OV7_fDYdv3DY",
-    authDomain: "homework-management-80418.firebaseapp.com",
-    projectId: "homework-management-80418",
-    storageBucket: "homework-management-80418.appspot.com",
-    messagingSenderId: "640106706442",
-    appId: "1:640106706442:web:bff1a227d5b6659a7891f3"
+    apiKey: "AIzaSyBtpd8S6rveVCTJHyFRnHQUbbBGXMAMMX0",
+    authDomain: "tasker-51b4f.firebaseapp.com",
+    projectId: "tasker-51b4f",
+    storageBucket: "tasker-51b4f.appspot.com",
+    messagingSenderId: "167872023814",
+    appId: "1:167872023814:web:d86a9966aa4be586c0e287"
 };
 
 export const app = firebase.initializeApp(firebaseConfig);

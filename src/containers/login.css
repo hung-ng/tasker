@@ -25,3 +25,10 @@
 #forgotPassword {
     margin: 0px 0px 0px 200px;
 }
+
+#login-form input {
+    border-radius: 5px;
+    margin: 5px 10px;
+    width: 50vh;
+    height: 40px;
+}
