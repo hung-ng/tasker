@@ -104,56 +104,65 @@ const AllTasks = () => {
         history.goBack()
     }
 
-    useEffect(async () => {
-        try {
-            const res = await db.collection('groups').doc(group_id).get()
-            const data = res.data()
-            const object = {
-                name: data.name,
-                creator_id: data.creator_id
-            }
-            const res1 = await db.collection('users').doc(object.creator_id).get()
-            const data1 = res1.data()
-            setGroupNameAndCreator({
-                groupName: object.name,
-                creator_id: object.creator_id,
-                creatorName: data1.firstName + " " + data1.lastName
-            })
-        }
-        catch (err) {
-            console.log(err.message);
-        }
-    }, [showEditName])
-
-    useEffect(async () => {
-        try {
-            await db.collection('groups').doc(group_id).collection('tasks').onSnapshot((snapShot) => {
-                setAllTasks(snapShot.docs.map((doc) => {
-                    return {
-                        data: doc.data(),
-                        id: doc.id
-                    }
+    useEffect(() => {
+        async function getGroupNameandCreator() {
+            try {
+                const res = await db.collection('groups').doc(group_id).get()
+                const data = res.data()
+                const object = {
+                    name: data.name,
+                    creator_id: data.creator_id
+                }
+                const res1 = await db.collection('users').doc(object.creator_id).get()
+                const data1 = res1.data()
+                setGroupNameAndCreator({
+                    groupName: object.name,
+                    creator_id: object.creator_id,
+                    creatorName: data1.firstName + " " + data1.lastName
                 })
-                )
-            })
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
-        catch (err) {
-            console.log(err.message);
-        }
-    }, [groupNameAndCreator])
+        getGroupNameandCreator()
+    }, [showEditName, group_id])
 
-    useEffect(async () => {
-        try {
-            const res = await db.collection('groups').doc(group_id).get();
-            const data = res.data();
-            var memebersId = data.members_id
-            setAllMembersId(memebersId)
-            setRemoveMember(false)
+    useEffect(() => {
+        async function getAllTask() {
+            try {
+                await db.collection('groups').doc(group_id).collection('tasks').onSnapshot((snapShot) => {
+                    setAllTasks(snapShot.docs.map((doc) => {
+                        return {
+                            data: doc.data(),
+                            id: doc.id
+                        }
+                    })
+                    )
+                })
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
-        catch (err) {
-            console.log(err.message);
+        getAllTask()
+    }, [groupNameAndCreator, group_id])
+
+    useEffect(() => {
+        async function getAllMembersId() {
+            try {
+                const res = await db.collection('groups').doc(group_id).get();
+                const data = res.data();
+                var memebersId = data.members_id
+                setAllMembersId(memebersId)
+                setRemoveMember(false)
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
-    }, [showMemberModal, removeMember])
+        getAllMembersId()
+    }, [showMemberModal, removeMember, group_id])
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>

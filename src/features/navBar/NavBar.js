@@ -18,12 +18,12 @@ const NavBar = () => {
         <div style={{ display: 'flex', height: '100vh', overflow: 'wrap', position: "sticky", top: 0 }}>
             <CDBSidebar textColor="#fff" backgroundColor="#333">
                 <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-                    <a
+                    <span
                         className="text-decoration-none"
                         style={{ color: 'inherit' }}
                     >
                         Tasker
-                    </a>
+                    </span>
                 </CDBSidebarHeader>
                 <CDBSidebarContent className="sidebar-content">
                     <CDBSidebarMenu>

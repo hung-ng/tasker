@@ -35,22 +35,25 @@ const Profile = () => {
         handleShowModal()
     }
 
-    useEffect(async () => {
-        try {
-            const res = await db.collection("users").doc(currentUser).get()
-            const data = res.data()
-            setProfileInfo({
-                firstName: data.firstName,
-                lastName: data.lastName,
-                phone: data.phone,
-                gender: data.gender,
-                dob: data.dob
-            })
+    useEffect(() => {
+        async function getProfileInfo() {
+            try {
+                const res = await db.collection("users").doc(currentUser).get()
+                const data = res.data()
+                setProfileInfo({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    phone: data.phone,
+                    gender: data.gender,
+                    dob: data.dob
+                })
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
-        catch (err) {
-            console.log(err.message);
-        }
-    }, [showEditModal])
+        getProfileInfo()
+    }, [showEditModal, currentUser])
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>

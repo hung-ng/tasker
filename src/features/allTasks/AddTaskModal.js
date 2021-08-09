@@ -20,9 +20,9 @@ const AddTaskModal = (props) => {
 
     const [rows, setRows] = useState(5)
 
-    const [minRows, setMinRows] = useState(5)
+    const minRows = 5;
 
-    const [maxRows, setMaxRows] = useState(10)
+    const maxRows = 10;
 
     const handleChange = (event) => {
         const textareaLineHeight = 24;

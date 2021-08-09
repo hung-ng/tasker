@@ -6,7 +6,6 @@ import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import { db } from '../../firebase/config';
-import { useAuth } from '../../firebase/Auth';
 import { useParams } from 'react-router-dom';
 
 const EditGroupNameModal = (props) => {

@@ -16,9 +16,9 @@ const NewComment = (props) => {
 
     const [rows, setRows] = useState(1)
 
-    const [minRows, setMinRows] = useState(1)
+    const minRows = 1
 
-    const [maxRows, setMaxRows] = useState(7)
+    const maxRows = 7
 
     const handleChange = (event) => {
         const textareaLineHeight = 24;

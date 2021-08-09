@@ -38,8 +38,7 @@ const Task = () => {
 
     const urlify = (text) => {
         if (text != null) {
-            var urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
-                ;
+            var urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/ ;
             const replaced = text.replace(urlRegex, function (url) {
                 return '<a href="' + url + '">' + url + '</a>';
             })
@@ -49,9 +48,9 @@ const Task = () => {
 
     const deleteTask = async (e) => {
         e.preventDefault();
-        if (currentUser == taskInfo.creator_id) {
+        if (currentUser === taskInfo.creator_id) {
             var cf = window.confirm("Delete task " + taskInfo.name + "?")
-            if (cf == true) {
+            if (cf === true) {
                 try {
                     await db.collection('groups').doc(group_id).collection("tasks").doc(task_id).delete()
                 }
@@ -67,57 +66,63 @@ const Task = () => {
 
     const editTask = (e) => {
         e.preventDefault();
-        if (currentUser == taskInfo.creator_id) {
+        if (currentUser === taskInfo.creator_id) {
             handleShowModal()
         } else {
             alert("You are not the group creator")
         }
     }
 
-    useEffect(async () => {
-        try {
-            const res1 = await db.collection('groups').doc(group_id).collection('tasks').doc(task_id).get()
-            const data1 = res1.data()
-            const res2 = await db.collection('groups').doc(group_id).get()
-            const data2 = res2.data()
-            setTaskInfo({
-                name: data1.name,
-                content: data1.content,
-                deadline: data1.deadline,
-                creator_id: data2.creator_id
-            })
-        }
-        catch (err) {
-            console.log(err.message);
-        }
-    }, [showModal])
-
-    useEffect(async () => {
-        try {
-            const res = await db.collection('groups').doc(group_id).collection('tasks').doc(task_id).collection("users_comment").orderBy("time", "desc").get()
-                .then(querySnapShot => {
-                    var commentInfo = []
-                    var commentCount = 0
-                    querySnapShot.forEach(doc => {
-                        const data = doc.data()
-                        const Info = {
-                            content: data.content,
-                            user_id: data.user_id,
-                            time: data.time,
-                            comment_id: doc.id
-                        }
-                        commentCount += 1
-                        commentInfo.push(Info)
-                    })
-                    setCommentInfo(commentInfo)
-                    setCommentNumber(commentCount)
-                    setNewComment(false)
+    useEffect(() => {
+        async function getTaskInfo() {
+            try {
+                const res1 = await db.collection('groups').doc(group_id).collection('tasks').doc(task_id).get()
+                const data1 = res1.data()
+                const res2 = await db.collection('groups').doc(group_id).get()
+                const data2 = res2.data()
+                setTaskInfo({
+                    name: data1.name,
+                    content: data1.content,
+                    deadline: data1.deadline,
+                    creator_id: data2.creator_id
                 })
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
-        catch (err) {
-            console.log(err.message);
+        getTaskInfo()
+    }, [showModal, group_id, task_id])
+
+    useEffect(() => {
+        async function getCommentInfo() {
+            try {
+                await db.collection('groups').doc(group_id).collection('tasks').doc(task_id).collection("users_comment").orderBy("time", "desc").get()
+                    .then(querySnapShot => {
+                        var commentInfo = []
+                        var commentCount = 0
+                        querySnapShot.forEach(doc => {
+                            const data = doc.data()
+                            const Info = {
+                                content: data.content,
+                                user_id: data.user_id,
+                                time: data.time,
+                                comment_id: doc.id
+                            }
+                            commentCount += 1
+                            commentInfo.push(Info)
+                        })
+                        setCommentInfo(commentInfo)
+                        setCommentNumber(commentCount)
+                        setNewComment(false)
+                    })
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
-    }, [taskInfo, newComment])
+        getCommentInfo()
+    }, [taskInfo, newComment, group_id, task_id])
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>

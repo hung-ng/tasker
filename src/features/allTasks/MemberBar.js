@@ -12,9 +12,9 @@ const MemberBar = (props) => {
 
     const handleOnclick = (e) => {
         e.preventDefault();
-        if (currentUser == props.creator_id) {
+        if (currentUser === props.creator_id) {
             var cf = window.confirm("Remove this member?")
-            if (cf == true) {
+            if (cf === true) {
                 removeUser()
             }
         } else {

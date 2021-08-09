@@ -10,12 +10,12 @@ const CommentBar = (props) => {
 
     const [commenter, setCommenter] = useState("")
 
-    const {currentUser} = useAuth()
+    const { currentUser } = useAuth()
 
     const handleDelete = () => {
         console.log(props.id);
         var del = window.confirm("Delete this comment?")
-        if (del == true){
+        if (del === true) {
             deleteComment()
         }
     }
@@ -26,11 +26,14 @@ const CommentBar = (props) => {
         props.status(true)
     }
 
-    useEffect(async () => {
-        const res = await db.collection('users').doc(props.user_id).get()
-        const data = res.data()
-        setCommenter(data.firstName + " " + data.lastName)
-    })
+    useEffect(() => {
+        async function getCommenter() {
+            const res = await db.collection('users').doc(props.user_id).get()
+            const data = res.data()
+            setCommenter(data.firstName + " " + data.lastName)
+        }
+        getCommenter()
+    }, [props.user_id])
 
     return (
         <div className="flex commentsection">
@@ -41,7 +44,7 @@ const CommentBar = (props) => {
                 </div>
                 <div className="content" dangerouslySetInnerHTML={{ __html: props.content }}></div>
             </div>
-            {props.user_id == currentUser && <div onClick={handleDelete} className="deletebutton">Delete</div>}
+            {props.user_id === currentUser && <div onClick={handleDelete} className="deletebutton">Delete</div>}
         </div>
     )
 }

@@ -32,36 +32,41 @@ const AllGroups = () => {
         history.push("/groups/" + id)
     }
 
-    useEffect(async () => {
-        try {
-            const res = await db.collection('users').doc(currentUser).get();
-            const data = res.data()
-            if (data.groups_id.length > 0) {
-                setAllGroupsId(data.groups_id);
-            }
-        }
-        catch (err) {
-            console.log(err.message);
-        }
-    }, [show])
-
-    useEffect(async () => {
-        try {
-            if (allGroupsId.length > 0) {
-                var allName = []
-                for (var i = 0; i < allGroupsId.length; i++) {
-                    const res = await db.collection("groups").doc(allGroupsId[i]).get();
-                    const data = res.data();
-                    allName.push(data.name)
+    useEffect(() => {
+        async function getGroupIds() {
+            try {
+                const res = await db.collection('users').doc(currentUser).get();
+                const data = res.data()
+                if (data.groups_id.length > 0) {
+                    setAllGroupsId(data.groups_id);
                 }
-                setAllGroupsName(allName)
+            }
+            catch (err) {
+                console.log(err.message);
             }
         }
-        catch (err) {
-            console.log(err.message);
+        getGroupIds()
+    }, [show, currentUser])
+
+    useEffect(() => {
+        async function getGroupNames() {
+            try {
+                if (allGroupsId.length > 0) {
+                    var allName = []
+                    for (var i = 0; i < allGroupsId.length; i++) {
+                        const res = await db.collection("groups").doc(allGroupsId[i]).get();
+                        const data = res.data();
+                        allName.push(data.name)
+                    }
+                    setAllGroupsName(allName)
+                }
+            }
+            catch (err) {
+                console.log(err.message);
+            }
         }
-    }
-        , [allGroupsId])
+        getGroupNames()
+    }, [allGroupsId])
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>
@@ -72,7 +77,8 @@ const AllGroups = () => {
                 <div onClick={handleShow} title="Creat new group" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>
             </div>
             <br />
-            {allGroupsName.length > 0 && allGroupsName.map((name, index) => {
+            {allGroupsName.length > 0 && allGroupsName
+            .map((name, index) => {
                 if (name.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return <GroupBar name={name} onClick={onClickHandle} id={allGroupsId[index]} />
                 }
