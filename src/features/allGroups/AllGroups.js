@@ -81,6 +81,8 @@ const AllGroups = () => {
             .map((name, index) => {
                 if (name.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return <GroupBar name={name} onClick={onClickHandle} id={allGroupsId[index]} />
+                } else{
+                    return true
                 }
             })}
         </div>
