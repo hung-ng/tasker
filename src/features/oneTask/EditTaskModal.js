@@ -6,7 +6,8 @@ import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import { useParams } from 'react-router-dom';
-import { db } from '../../firebase/config';
+import { db, storage } from '../../firebase/config';
+import { useAuth } from '../../firebase/Auth';
 
 const EditTaskModal = (props) => {
 
@@ -14,7 +15,13 @@ const EditTaskModal = (props) => {
 
     const [error, setError] = useState("")
 
+    const {currentUser} = useAuth()
+
     const [loading, setLoading] = useState(false)
+
+    const [fileUrl, setFileUrl] = useState([])
+
+    const [fileName, setFileName] = useState([])
 
     const [value, setValue] = useState('');
 
@@ -52,6 +59,25 @@ const EditTaskModal = (props) => {
         props.handleClose()
     }
 
+    const fileOnChange = async (e) => {
+        const filelist = e.target.files;
+        const storageRef = storage.ref();
+        const now = Date.now()
+        var fileUrlList = []
+        var fileNameList = []
+        setLoading(true)
+        for (var i = 0; i < filelist.length; i ++){
+            const fileRef = storageRef.child(currentUser + "/"+ now + filelist[i].name);
+            await fileRef.put(filelist[i]);
+            const url = await fileRef.getDownloadURL();
+            fileUrlList.push(url)
+            fileNameList.push(filelist[i].name)
+        }
+        setLoading(false)
+        setFileUrl(fileUrlList)
+        setFileName(fileNameList)
+    }
+
     const formController = (e) => {
         e.preventDefault();
         const dataForm = {
@@ -83,7 +109,9 @@ const EditTaskModal = (props) => {
             await db.collection("groups").doc(group_id).collection("tasks").doc(task_id).update({
                 name: data.name,
                 deadline: data.deadline,
-                content: data.content
+                content: data.content,
+                attachments: fileUrl,
+                attachmentsName: fileName
             })
             props.handleClose()
             setLoading(false)
@@ -119,6 +147,10 @@ const EditTaskModal = (props) => {
                             <label for="content">Details</label>
                         </div>
                         <textarea name="content" form="editTask" maxLength="1000" rows={rows} value={value} onChange={handleChange}></textarea>
+                    </div>
+                    <div className="input-wrapper">
+                        <label for="file">Attachments</label>
+                        <input disabled={loading} id="file" type="file" name="file" onChange={fileOnChange} accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" multiple />
                     </div>
                 </form>
             </ModalBody>

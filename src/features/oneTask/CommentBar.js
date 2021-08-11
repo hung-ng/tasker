@@ -42,7 +42,7 @@ const CommentBar = (props) => {
                     <div style={{ cursor: "pointer" }} title={props.user_id}>{commenter}</div>
                     <div>{date}</div>
                 </div>
-                <div className="content" dangerouslySetInnerHTML={{ __html: props.content }}></div>
+                <div className="content" style={{whiteSpace: "pre-line"}} dangerouslySetInnerHTML={{ __html: props.content }}></div>
             </div>
             {props.user_id === currentUser && <div onClick={handleDelete} className="deletebutton">Delete</div>}
         </div>
