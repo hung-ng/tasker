@@ -15,7 +15,7 @@ const EditTaskModal = (props) => {
 
     const [error, setError] = useState("")
 
-    const {currentUser} = useAuth()
+    const { currentUser } = useAuth()
 
     const [loading, setLoading] = useState(false)
 
@@ -66,12 +66,16 @@ const EditTaskModal = (props) => {
         var fileUrlList = []
         var fileNameList = []
         setLoading(true)
-        for (var i = 0; i < filelist.length; i ++){
-            const fileRef = storageRef.child(currentUser + "/"+ now + filelist[i].name);
-            await fileRef.put(filelist[i]);
-            const url = await fileRef.getDownloadURL();
-            fileUrlList.push(url)
-            fileNameList.push(filelist[i].name)
+        for (var i = 0; i < filelist.length; i++) {
+            if (filelist[i].size < 5 * 1024 * 1024) {
+                const fileRef = storageRef.child(currentUser + "/" + now + filelist[i].name);
+                await fileRef.put(filelist[i]);
+                const url = await fileRef.getDownloadURL();
+                fileUrlList.push(url)
+                fileNameList.push(filelist[i].name)
+            } else {
+                alert("File" + filelist[i].name + " is too large")
+            }
         }
         setLoading(false)
         setFileUrl(fileUrlList)
@@ -149,8 +153,10 @@ const EditTaskModal = (props) => {
                         <textarea name="content" form="editTask" maxLength="1000" rows={rows} value={value} onChange={handleChange}></textarea>
                     </div>
                     <div className="input-wrapper">
-                        <label for="file">Attachments</label>
-                        <input disabled={loading} id="file" type="file" name="file" onChange={fileOnChange} accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" multiple />
+                        <div className="attachmentsLetter">Attachments</div>
+                        <input id="file" type="file" onChange={fileOnChange} accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" multiple hidden />
+                        <label class="fileLabel" for="file">Choose files</label>
+                        <span id="file-chosen">{fileName.toString()}</span>
                     </div>
                 </form>
             </ModalBody>

@@ -84,3 +84,22 @@
     margin-left: 10px;
     cursor: pointer;
 }
+
+.attachmentsLetter{
+    font-size: large;
+}
+
+.fileLabel{
+    background-color: black;
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+#file-chosen{
+    margin-left: 0.3rem;
+    font-family: sans-serif;
+}
