@@ -115,7 +115,8 @@ const AddTaskModal = (props) => {
                 deadline: data.deadline,
                 content: data.content,
                 attachments: fileUrl,
-                attachmentsName: fileName
+                attachmentsName: fileName,
+                visible: true
             })
             props.handleClose()
             setLoading(false)

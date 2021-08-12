@@ -4,7 +4,7 @@ import { db } from '../../firebase/config';
 import './task.css'
 import SubmitTask from './NewComment';
 import CommentBar from './CommentBar';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faEyeSlash, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../../firebase/Auth';
 import EditTaskModal from './EditTaskModal';
@@ -32,6 +32,8 @@ const Task = () => {
 
     const [showModal, setShowModal] = useState(false);
 
+    const [visibility, setVisibility] = useState(null);
+
     const handleCloseModal = () => setShowModal(false);
 
     const handleShowModal = () => setShowModal(true);
@@ -43,6 +45,18 @@ const Task = () => {
                 return '<a target="_blank" rel="noopener noreferrer" href="' + url + '">' + url + '</a>';
             })
             return replaced
+        }
+    }
+
+    const sortComment = (array) => {
+        if (currentUser !== taskInfo.creator_id) {
+            if (visibility === true) {
+                return array
+            } else {
+                return array.filter(element => element.user_id === currentUser || element.user_id === taskInfo.creator_id)
+            }
+        } else {
+            return array
         }
     }
 
@@ -73,6 +87,24 @@ const Task = () => {
         }
     }
 
+    const changeVisible = async (e) => {
+        e.preventDefault();
+        if (currentUser === taskInfo.creator_id) {
+            try {
+                const newVisibility = !visibility
+                await db.collection("groups").doc(group_id).collection("tasks").doc(task_id).update({
+                    visible: newVisibility
+                })
+                setVisibility(newVisibility)
+            }
+            catch (err) {
+                console.log(err.message);
+            }
+        } else {
+            alert("You are not the group creator")
+        }
+    }
+
     useEffect(() => {
         async function getTaskInfo() {
             try {
@@ -86,15 +118,16 @@ const Task = () => {
                     deadline: data1.deadline,
                     attachments: data1.attachments,
                     attachmentsName: data1.attachmentsName,
-                    creator_id: data2.creator_id
+                    creator_id: data2.creator_id,
                 })
+                setVisibility(data1.visible)
             }
             catch (err) {
                 console.log(err.message);
             }
         }
         getTaskInfo()
-    }, [showModal, group_id, task_id])
+    }, [showModal, group_id, task_id, visibility])
 
     useEffect(() => {
         async function getCommentInfo() {
@@ -133,6 +166,8 @@ const Task = () => {
                 <div className="name">{taskInfo.name}</div>
                 <div className="flex iconflex">
                     <div onClick={editTask} title="Edit" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
+                    {(visibility === true) && <div onClick={changeVisible} title="Comments visible to everyone" className="icon"><FontAwesomeIcon icon={faEye} size="1x" /></div>}
+                    {(visibility === false) && <div onClick={changeVisible} title="Comments visible to commentor and creator only" className="icon"><FontAwesomeIcon icon={faEyeSlash} size="1x" /></div>}
                     <div onClick={deleteTask} title="Delete" className="icon"><FontAwesomeIcon icon={faTrashAlt} size="1x" /></div>
                 </div>
             </div>
@@ -155,7 +190,7 @@ const Task = () => {
             <hr />
             <p>Comments: {commentNumber}</p>
             <SubmitTask status={setNewComment} />
-            {commentInfo.map(comment => {
+            {sortComment(commentInfo).map(comment => {
                 return <CommentBar status={setNewComment} id={comment.comment_id} content={urlify(comment.content)} time={comment.time} user_id={comment.user_id} />
             })}
         </div>
