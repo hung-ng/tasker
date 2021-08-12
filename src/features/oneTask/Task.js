@@ -143,6 +143,7 @@ const Task = () => {
                 (taskInfo.attachments)
                 && (
                     <div>
+                        <br />
                         <div>Attachments</div>
                         {taskInfo.attachments.map((attach, index) => {
                             return <div><a target="_blank" rel="noopener noreferrer" href={attach}><div>{taskInfo.attachmentsName[index]}</div></a></div>

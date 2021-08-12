@@ -149,7 +149,7 @@ const AllTasks = () => {
     useEffect(() => {
         async function getAllTask() {
             try {
-                await db.collection('groups').doc(group_id).collection('tasks').onSnapshot((snapShot) => {
+                await db.collection('groups').doc(group_id).collection('tasks').orderBy("deadline").onSnapshot((snapShot) => {
                     setAllTasks(snapShot.docs.map((doc) => {
                         return {
                             data: doc.data(),
