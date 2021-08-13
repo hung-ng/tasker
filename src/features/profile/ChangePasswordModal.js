@@ -83,12 +83,12 @@ const ChangePasswordModal = (props) => {
             <ModalBody>
                 <form id="changePassword" onSubmit={formController}>
                     <div className="input-wrapper">
-                        <label for="password">New password</label>
+                        <label htmlFor="password">New password</label>
                         <input id="password" type="password" name="pw" maxLength="30" />
                         <div className="error">{error.password}</div>
                     </div>
                     <div className="input-wrapper">
-                        <label for="password">Confirm new password</label>
+                        <label htmlFor="password">Confirm new password</label>
                         <input id="password" type="password" name="confirmPassword" maxLength="30" />
                         <div className="error">{error.confirmPassword}</div>
                     </div>

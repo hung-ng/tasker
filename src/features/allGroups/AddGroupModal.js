@@ -72,7 +72,7 @@ const AddGroupModal = (props) => {
             <ModalBody>
                 <form id="addGroup" onSubmit={formController}>
                     <div className="input-wrapper">
-                        <label for="groupName">Group name</label>
+                        <label htmlFor="groupName">Group name</label>
                         <input id="groupName" type="text" name="name" maxLength="40" />
                         <div className="error">{error}</div>
                     </div>

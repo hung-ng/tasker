@@ -109,29 +109,29 @@ const EditProfileModal = (props) => {
             <ModalBody>
                 <form id="profile" onSubmit={formController}>
                     <div className="input-wrapper">
-                        <label for="fisrtName">First name</label>
+                        <label htmlFor="fisrtName">First name</label>
                         <input id="fisrtName" type="text" name="firstName" maxLength="30" />
                         <div className="error">{error.firstName}</div>
                     </div>
                     <div className="input-wrapper">
-                        <label for="lastName">Last name</label>
+                        <label htmlFor="lastName">Last name</label>
                         <input id="lastName" type="text" name="lastname" maxLength="30" />
                         <div className="error">{error.lastName}</div>
                     </div>
                     <div className="input-wrapper">
-                        <label for="phone">Phone No</label>
+                        <label htmlFor="phone">Phone No</label>
                         <input id="phone" type="text" name="phone" minLength="10" maxLength="10" />
                         <div className="error">{error.phone}</div>
                     </div>
                     <div className="input-wrapper">
-                        <label for="lastName">Gender</label>
+                        <label htmlFor="lastName">Gender</label>
                         <select name="gender" form="profile">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                     </div>
                     <div className="input-wrapper">
-                        <label for="lastName">D.o.B</label>
+                        <label htmlFor="lastName">D.o.B</label>
                         <input id="lastName" type="date" name="dob" />
                         <div className="error">{error.dob}</div>
                     </div>

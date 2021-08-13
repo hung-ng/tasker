@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { db } from "../../firebase/config";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../firebase/Auth";
-import './task.css'
+import './task.css';
+import useSound from 'use-sound';
+import SwooshSound from '../../resources/SwooshSound.mp3';
 
 const NewComment = (props) => {
 
     const { group_id, task_id } = useParams()
 
     const { currentUser } = useAuth()
+
+    const [playSound] = useSound(SwooshSound);
 
     const [loading, setLoading] = useState(false)
 
@@ -61,6 +65,7 @@ const NewComment = (props) => {
             })
             setValue("")
             setLoading(false)
+            playSound()
             props.status(true)
         }
         catch (err) {

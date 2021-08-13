@@ -8,6 +8,8 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import { useParams } from 'react-router-dom';
 import { db, storage } from '../../firebase/config';
 import { useAuth } from '../../firebase/Auth';
+import useSound from 'use-sound';
+import SwooshSound from '../../resources/SwooshSound.mp3';
 
 const AddTaskModal = (props) => {
 
@@ -16,6 +18,8 @@ const AddTaskModal = (props) => {
     const [error, setError] = useState("")
 
     const { currentUser } = useAuth()
+
+    const [playSound] = useSound(SwooshSound);
 
     const [loading, setLoading] = useState(false)
 
@@ -118,6 +122,7 @@ const AddTaskModal = (props) => {
                 attachmentsName: fileName,
                 visible: true
             })
+            playSound()
             props.handleClose()
             setLoading(false)
         }
@@ -140,23 +145,23 @@ const AddTaskModal = (props) => {
                 <div className="error">{error}</div>
                 <form id="addTask" onSubmit={formController}>
                     <div className="input-wrapper">
-                        <label for="taskName">Title</label>
+                        <label htmlFor="taskName">Title</label>
                         <input id="taskName" type="text" name="name" maxLength="40" />
                     </div>
                     <div className="input-wrapper">
-                        <label for="taskDl">Deadline</label>
+                        <label htmlFor="taskDl">Deadline</label>
                         <input id="taskDl" type="date" name="deadline" />
                     </div>
                     <div className="input-wrapper flex">
                         <div className="textarea-label">
-                            <label for="content">Details</label>
+                            <label htmlFor="content">Details</label>
                         </div>
                         <textarea name="content" form="addTask" maxLength="1000" rows={rows} value={value} onChange={handleChange}></textarea>
                     </div>
                     <div className="input-wrapper">
                         <div className="attachmentsLetter">Attachments</div>
                         <input id="file" type="file" onChange={fileOnChange} accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" multiple hidden />
-                        <label class="fileLabel" for="file">Choose files</label>
+                        <label className="fileLabel" htmlFor="file">Choose files</label>
                         <span id="file-chosen">{fileName.toString()}</span>
                     </div>
                 </form>

@@ -139,23 +139,23 @@ const EditTaskModal = (props) => {
                 <div className="error">{error}</div>
                 <form id="editTask" onSubmit={formController}>
                     <div className="input-wrapper">
-                        <label for="taskName">Title</label>
+                        <label htmlFor="taskName">Title</label>
                         <input id="taskName" type="text" name="name" maxLength="40" />
                     </div>
                     <div className="input-wrapper">
-                        <label for="taskDl">Deadline</label>
+                        <label htmlFor="taskDl">Deadline</label>
                         <input id="taskDl" type="date" name="deadline" />
                     </div>
                     <div className="input-wrapper flex">
                         <div className="textarea-label">
-                            <label for="content">Details</label>
+                            <label htmlFor="content">Details</label>
                         </div>
                         <textarea name="content" form="editTask" maxLength="1000" rows={rows} value={value} onChange={handleChange}></textarea>
                     </div>
                     <div className="input-wrapper">
                         <div className="attachmentsLetter">Attachments</div>
                         <input id="file" type="file" onChange={fileOnChange} accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" multiple hidden />
-                        <label class="fileLabel" for="file">Choose files</label>
+                        <label className="fileLabel" htmlFor="file">Choose files</label>
                         <span id="file-chosen">{fileName.toString()}</span>
                     </div>
                 </form>

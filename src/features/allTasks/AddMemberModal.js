@@ -88,7 +88,7 @@ const AddMemberModal = (props) => {
                 <div className="error">{error}</div>
                 <form id="addMember" onSubmit={formController}>
                     <div className="input-wrapper">
-                        <label for="taskName">User's email</label>
+                        <label htmlFor="taskName">User's email</label>
                         <input id="taskName" type="text" name="email" maxLength="40" />
                     </div>
                 </form>
