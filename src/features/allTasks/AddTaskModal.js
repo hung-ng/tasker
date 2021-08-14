@@ -19,7 +19,7 @@ const AddTaskModal = (props) => {
 
     const { currentUser } = useAuth()
 
-    const [playSound] = useSound(SwooshSound);
+    const [playSwooshSound] = useSound(SwooshSound);
 
     const [loading, setLoading] = useState(false)
 
@@ -122,7 +122,7 @@ const AddTaskModal = (props) => {
                 attachmentsName: fileName,
                 visible: true
             })
-            playSound()
+            playSwooshSound()
             props.handleClose()
             setLoading(false)
         }

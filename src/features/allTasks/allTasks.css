@@ -22,12 +22,12 @@
 }
 
 .creator {
-    margin-left: 600px;
     padding-top: 30px;
 }
 
-.header {
+.allgroups-header {
     justify-content: space-between;
+    width: 60vw;
 }
 
 .icon {

@@ -3,10 +3,14 @@ import { useParams } from 'react-router-dom';
 import { useAuth } from '../../firebase/Auth';
 import { db } from '../../firebase/config';
 import firebase from 'firebase';
+import useSound from 'use-sound';
+import CrumpledPaper from '../../resources/CrumpledPaper.mp3';
 
 const MemberBar = (props) => {
 
     const { group_id } = useParams()
+
+    const [playCrumpledPaper] = useSound(CrumpledPaper);
 
     const { currentUser } = useAuth()
 
@@ -30,6 +34,7 @@ const MemberBar = (props) => {
         await db.collection("users").doc(props.id).update({
             groups_id: firebase.firestore.FieldValue.arrayRemove(group_id)
         })
+        playCrumpledPaper()
         props.status(true)
     }
 

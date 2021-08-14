@@ -8,12 +8,19 @@ import { faEdit, faEye, faEyeSlash, faTrashAlt } from '@fortawesome/free-solid-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../../firebase/Auth';
 import EditTaskModal from './EditTaskModal';
+import useSound from 'use-sound';
+import PopUp from '../../resources/PopUp.mp3';
+import CrumpledPaper from '../../resources/CrumpledPaper.mp3';
 
 const Task = () => {
 
     const { group_id, task_id } = useParams()
 
     const history = useHistory()
+
+    const [playPopUp] = useSound(PopUp);
+
+    const [playCrumpledPaper] = useSound(CrumpledPaper);
 
     const [taskInfo, setTaskInfo] = useState({
         name: '',
@@ -71,6 +78,7 @@ const Task = () => {
                 catch (err) {
                     console.log(err.mesage);
                 }
+                playCrumpledPaper()
                 history.goBack()
             }
         } else {
@@ -95,6 +103,7 @@ const Task = () => {
                 await db.collection("groups").doc(group_id).collection("tasks").doc(task_id).update({
                     visible: newVisibility
                 })
+                playPopUp()
                 setVisibility(newVisibility)
             }
             catch (err) {

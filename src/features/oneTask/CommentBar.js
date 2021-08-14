@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../firebase/Auth';
 import { db } from '../../firebase/config';
+import useSound from 'use-sound';
+import CrumpledPaper from '../../resources/CrumpledPaper.mp3';
 
 const CommentBar = (props) => {
     const date = props.time.toDate().toLocaleString()
 
     const { group_id, task_id } = useParams()
+
+    const [playCrumpledPaper] = useSound(CrumpledPaper);
 
     const [commenter, setCommenter] = useState("")
 
@@ -23,6 +27,7 @@ const CommentBar = (props) => {
     const deleteComment = async () => {
         console.log(group_id);
         await db.collection("groups").doc(group_id).collection("tasks").doc(task_id).collection("users_comment").doc(props.id).delete()
+        playCrumpledPaper()
         props.status(true)
     }
 

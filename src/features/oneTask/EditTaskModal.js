@@ -8,6 +8,8 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import { useParams } from 'react-router-dom';
 import { db, storage } from '../../firebase/config';
 import { useAuth } from '../../firebase/Auth';
+import useSound from 'use-sound';
+import SwooshSound from '../../resources/SwooshSound.mp3';
 
 const EditTaskModal = (props) => {
 
@@ -16,6 +18,8 @@ const EditTaskModal = (props) => {
     const [error, setError] = useState("")
 
     const { currentUser } = useAuth()
+
+    const [playSwooshSound] = useSound(SwooshSound);
 
     const [loading, setLoading] = useState(false)
 
@@ -117,6 +121,7 @@ const EditTaskModal = (props) => {
                 attachments: fileUrl,
                 attachmentsName: fileName
             })
+            playSwooshSound()
             props.handleClose()
             setLoading(false)
         }

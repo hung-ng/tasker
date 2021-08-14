@@ -71,7 +71,7 @@ const AllGroups = () => {
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>
             <AddGroupModal show={show} handleClose={handleClose} handleShow={handleShow} />
-            <div className="flex header">
+            <div className="flex allgroups-header">
                 <div className="groupName">Groups</div>
                 <SearchBar value={searchTerm} setSearchTerm={setSearchTerm} />
                 <div onClick={handleShow} title="Creat new group" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>

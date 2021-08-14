@@ -9,12 +9,16 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../firebase/config';
 import { useAuth } from '../../firebase/Auth';
 import firebase from 'firebase';
+import useSound from 'use-sound';
+import SwooshSound from '../../resources/SwooshSound.mp3';
 
 const AddMemberModal = (props) => {
 
     const { group_id } = useParams()
 
     const { currentUser } = useAuth()
+
+    const [playSwooshSound] = useSound(SwooshSound);
 
     const [error, setError] = useState("")
 
@@ -61,6 +65,7 @@ const AddMemberModal = (props) => {
                     await db.collection("users").doc(email).update({
                         groups_id: firebase.firestore.FieldValue.arrayUnion(group_id)
                     })
+                    playSwooshSound()
                     props.handleClose()
                     setLoading(false)
                 }

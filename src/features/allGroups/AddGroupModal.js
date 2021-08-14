@@ -8,12 +8,16 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import { db } from '../../firebase/config';
 import { useAuth } from '../../firebase/Auth';
 import firebase from 'firebase';
+import useSound from 'use-sound';
+import SwooshSound from '../../resources/SwooshSound.mp3';
 
 const AddGroupModal = (props) => {
 
     const [error, setError] = useState("")
 
     const { currentUser } = useAuth()
+
+    const [playSwooshSound] = useSound(SwooshSound);
 
     const [loading, setLoading] = useState(false)
 
@@ -51,6 +55,7 @@ const AddGroupModal = (props) => {
             await db.collection("users").doc(currentUser).update({
                 groups_id: firebase.firestore.FieldValue.arrayUnion(group_id)
             })
+            playSwooshSound()
             setLoading(false)
             props.handleClose()
         }

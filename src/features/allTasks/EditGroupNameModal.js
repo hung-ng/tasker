@@ -7,12 +7,16 @@ import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import { db } from '../../firebase/config';
 import { useParams } from 'react-router-dom';
+import useSound from 'use-sound';
+import SwooshSound from '../../resources/SwooshSound.mp3';
 
 const EditGroupNameModal = (props) => {
 
     const [error, setError] = useState("")
 
     const {group_id} = useParams()
+
+    const [playSwooshSound] = useSound(SwooshSound);
 
     const [loading, setLoading] = useState(false)
 
@@ -42,6 +46,7 @@ const EditGroupNameModal = (props) => {
             await db.collection("groups").doc(group_id).update({
                 name: group_name
             })
+            playSwooshSound()
             setLoading(false)
             props.handleClose()
         }

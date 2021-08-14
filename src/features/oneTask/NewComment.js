@@ -12,7 +12,7 @@ const NewComment = (props) => {
 
     const { currentUser } = useAuth()
 
-    const [playSound] = useSound(SwooshSound);
+    const [playSwooshSound] = useSound(SwooshSound);
 
     const [loading, setLoading] = useState(false)
 
@@ -65,7 +65,7 @@ const NewComment = (props) => {
             })
             setValue("")
             setLoading(false)
-            playSound()
+            playSwooshSound()
             props.status(true)
         }
         catch (err) {
