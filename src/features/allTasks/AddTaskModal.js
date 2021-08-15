@@ -8,6 +8,7 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import { useParams } from 'react-router-dom';
 import { db, storage } from '../../firebase/config';
 import { useAuth } from '../../firebase/Auth';
+import firebase from 'firebase';
 import useSound from 'use-sound';
 import SwooshSound from '../../resources/SwooshSound.mp3';
 
@@ -114,7 +115,8 @@ const AddTaskModal = (props) => {
     const formModel = async (data) => {
         try {
             setLoading(true);
-            await db.collection("groups").doc(group_id).collection("tasks").add({
+            const now = new Date()
+            const res1 = await db.collection("groups").doc(group_id).collection("tasks").add({
                 name: data.name,
                 deadline: data.deadline,
                 content: data.content,
@@ -122,6 +124,17 @@ const AddTaskModal = (props) => {
                 attachmentsName: fileName,
                 visible: true
             })
+            const res2 = await db.collection("notifications").add({
+                time: now,
+                content: props.creator + " added a new task to group " + props.groupName,
+                path: "/groups/" + group_id + "/tasks/" + res1.id
+            })
+            for (var i = 0; i < props.members_id.length; i++) {
+                await db.collection("users").doc(props.members_id[i]).update({
+                    notifications: firebase.firestore.FieldValue.arrayUnion(res2.id),
+                    unseen_notifications: true
+                })
+            }
             playSwooshSound()
             props.handleClose()
             setLoading(false)

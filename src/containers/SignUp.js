@@ -92,7 +92,9 @@ const SignUp = () => {
             await db.collection("users").doc(data.email).set({
                 groups_id: [],
                 firstName: data.firstName.trim(),
-                lastName: data.lastName.trim()
+                lastName: data.lastName.trim(),
+                notifications: [],
+                unseen_notifications: false
             })
 
             auth.currentUser.updateProfile({

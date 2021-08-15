@@ -11,6 +11,7 @@ import AddMemberModal from "./AddMemberModal";
 import MemberBar from "./MemberBar";
 import EditGroupNameModal from "./EditGroupNameModal";
 import firebase from 'firebase';
+import NotificationContainer from "../notifications/NotificationContainer";
 
 const AllTasks = () => {
 
@@ -87,7 +88,7 @@ const AllTasks = () => {
 
     const leaveGroup = (e) => {
         e.preventDefault();
-        if (currentUser !== groupNameAndCreator.creator_id){
+        if (currentUser !== groupNameAndCreator.creator_id) {
             var cf1 = window.confirm("Leave this group ?")
             if (cf1 === true) {
                 leave()
@@ -184,22 +185,21 @@ const AllTasks = () => {
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>
-            <AddTaskModal show={showTaskModal} handleClose={handleCloseTaskModal} handleShow={handleShowTaskModal} />
+            <AddTaskModal members_id={allMembersId} creator={groupNameAndCreator.creatorName} groupName={groupNameAndCreator.groupName} show={showTaskModal} handleClose={handleCloseTaskModal} handleShow={handleShowTaskModal} />
 
-            <AddMemberModal show={showMemberModal} handleClose={handleCloseMemberModal} handleShow={handleShowMemberModal} />
+            <AddMemberModal creator={groupNameAndCreator.creatorName} groupName={groupNameAndCreator.groupName} show={showMemberModal} handleClose={handleCloseMemberModal} handleShow={handleShowMemberModal} />
 
-            <EditGroupNameModal show={showEditName} handleClose={handleCloseEditName} handleShow={handleShowEditName} />
+            <EditGroupNameModal groupName={groupNameAndCreator.groupName} members_id={allMembersId} show={showEditName} creator={groupNameAndCreator.creatorName} handleClose={handleCloseEditName} handleShow={handleShowEditName} />
 
-            <div className="flex header">
+            <div className="flex main-header">
                 <div className="flex">
                     <div className="groupName">{groupNameAndCreator.groupName}</div>
                     <div onClick={editGroupName} title="Change group name" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
-                    {/* {currentUser !== groupNameAndCreator.creator_id && */}
-                        <div onClick={leaveGroup} title="Leave group" className="leaveIcon"><FontAwesomeIcon icon={faDoorOpen} size="1x" /></div>
-                    {/* // } */}
+                    <div onClick={leaveGroup} title="Leave group" className="leaveIcon"><FontAwesomeIcon icon={faDoorOpen} size="1x" /></div>
                 </div>
                 <div className="creator">Creator: {groupNameAndCreator.creatorName}</div>
                 <div onClick={createTask} title="Add task" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>
+                <NotificationContainer />
             </div>
             <br />
             <div className="flex container">

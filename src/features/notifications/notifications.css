@@ -1,0 +1,9 @@
+.notiContent{
+    width: 30vw;
+    overflow-wrap: break-word;
+    white-space:normal;
+}
+
+.notiTime{
+    font-size: small;
+}

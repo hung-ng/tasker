@@ -7,6 +7,7 @@ import ModalFooter from "react-bootstrap/ModalFooter";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import { db } from '../../firebase/config';
 import { useParams } from 'react-router-dom';
+import firebase from 'firebase';
 import useSound from 'use-sound';
 import SwooshSound from '../../resources/SwooshSound.mp3';
 
@@ -43,9 +44,21 @@ const EditGroupNameModal = (props) => {
     const formModel = async (group_name) => {
         try {
             setLoading(true);
+            const now = new Date()
             await db.collection("groups").doc(group_id).update({
                 name: group_name
             })
+            const res = await db.collection("notifications").add({
+                time: now,
+                content: props.creator + " change group " + props.groupName + "'s name to " + group_name,
+                path: "/groups/" + group_id
+            })
+            for (var i = 0; i < props.members_id.length; i++) {
+                await db.collection("users").doc(props.members_id[i]).update({
+                    notifications: firebase.firestore.FieldValue.arrayUnion(res.id),
+                    unseen_notifications: true
+                })
+            }
             playSwooshSound()
             setLoading(false)
             props.handleClose()

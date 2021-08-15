@@ -10,11 +10,6 @@
     justify-content: space-between;
 }
 
-.header {
-    justify-content: space-between;
-    overflow-wrap: break-word;
-}
-
 .groupName {
     font-size: 50px;
 }

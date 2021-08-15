@@ -48,6 +48,7 @@ const AddMemberModal = (props) => {
         try {
             setLoading(true);
             const res = await db.collection("users").doc(email).get();
+            const now = new Date()
             if (res.exists) {
                 const res1 = await db.collection("groups").doc(group_id).get()
                 const data = res1.data()
@@ -62,8 +63,15 @@ const AddMemberModal = (props) => {
                     await db.collection("groups").doc(group_id).update({
                         members_id: firebase.firestore.FieldValue.arrayUnion(email)
                     })
+                    const res = await db.collection("notifications").add({
+                        time: now,
+                        content: props.creator + " added you to group " + props.groupName,
+                        path: "/groups/" + group_id
+                    })
                     await db.collection("users").doc(email).update({
-                        groups_id: firebase.firestore.FieldValue.arrayUnion(group_id)
+                        groups_id: firebase.firestore.FieldValue.arrayUnion(group_id),
+                        notifications: firebase.firestore.FieldValue.arrayUnion(res.id),
+                        unseen_notifications: true
                     })
                     playSwooshSound()
                     props.handleClose()

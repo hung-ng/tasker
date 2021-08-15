@@ -11,6 +11,7 @@ import EditTaskModal from './EditTaskModal';
 import useSound from 'use-sound';
 import PopUp from '../../resources/PopUp.mp3';
 import CrumpledPaper from '../../resources/CrumpledPaper.mp3';
+import NotificationContainer from '../notifications/NotificationContainer';
 
 const Task = () => {
 
@@ -128,6 +129,7 @@ const Task = () => {
                     attachments: data1.attachments,
                     attachmentsName: data1.attachmentsName,
                     creator_id: data2.creator_id,
+                    members_id: data2.members_id
                 })
                 setVisibility(data1.visible)
             }
@@ -170,15 +172,18 @@ const Task = () => {
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>
-            <EditTaskModal show={showModal} handleClose={handleCloseModal} handleShow={handleShowModal} />
-            <div className="flex">
-                <div className="name">{taskInfo.name}</div>
-                <div className="flex iconflex">
-                    <div onClick={editTask} title="Edit" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
-                    {(visibility === true) && <div onClick={changeVisible} title="Comments visible to everyone" className="icon"><FontAwesomeIcon icon={faEye} size="1x" /></div>}
-                    {(visibility === false) && <div onClick={changeVisible} title="Comments visible to commentor and creator only" className="icon"><FontAwesomeIcon icon={faEyeSlash} size="1x" /></div>}
-                    <div onClick={deleteTask} title="Delete" className="icon"><FontAwesomeIcon icon={faTrashAlt} size="1x" /></div>
+            <EditTaskModal members_id={taskInfo.members_id} task={taskInfo.name} show={showModal} handleClose={handleCloseModal} handleShow={handleShowModal} />
+            <div className="flex main-header">
+                <div className="flex">
+                    <div className="name">{taskInfo.name}</div>
+                    <div className="flex iconflex">
+                        <div onClick={editTask} title="Edit" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
+                        {(visibility === true) && <div onClick={changeVisible} title="Comments visible to everyone" className="icon"><FontAwesomeIcon icon={faEye} size="1x" /></div>}
+                        {(visibility === false) && <div onClick={changeVisible} title="Comments visible to commentor and creator only" className="icon"><FontAwesomeIcon icon={faEyeSlash} size="1x" /></div>}
+                        <div onClick={deleteTask} title="Delete" className="icon"><FontAwesomeIcon icon={faTrashAlt} size="1x" /></div>
+                    </div>
                 </div>
+                <NotificationContainer />
             </div>
             <div className="dl">Deadline: {taskInfo.deadline}</div>
             <br />

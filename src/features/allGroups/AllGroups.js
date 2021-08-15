@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import AddGroupModal from './AddGroupModal';
 import SearchBar from './SearchBar';
+import NotificationContainer from '../notifications/NotificationContainer';
 
 
 const AllGroups = () => {
@@ -71,10 +72,11 @@ const AllGroups = () => {
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>
             <AddGroupModal show={show} handleClose={handleClose} handleShow={handleShow} />
-            <div className="flex allgroups-header">
+            <div className="flex main-header">
                 <div className="groupName">Groups</div>
                 <SearchBar value={searchTerm} setSearchTerm={setSearchTerm} />
                 <div onClick={handleShow} title="Creat new group" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>
+                <NotificationContainer />
             </div>
             <br />
             {allGroupsName.length > 0 && allGroupsName
