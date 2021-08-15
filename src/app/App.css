@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 .App {
   text-align: center;
 }
@@ -46,4 +48,8 @@
 
 .cursor{
   cursor: pointer;
+}
+
+div{
+  font-family: 'Open Sans', sans-serif;
 }

@@ -60,9 +60,10 @@ const Profile = () => {
             <EditProfileModal show={showEditModal} handleClose={handleCloseEditModal} handleShow={handleShowEditModal} />
             <ChangePasswordModal show={showModal} handleClose={handleCloseModal} handleShow={handleShowModal} />
             <div className="flex">
-                <div className="profileLetter">Profile</div>
+                <div className="profileLetter">Personal Infomation</div>
                 <div onClick={handleShowEditModal} title="Edit" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
             </div>
+            <br />
             <div className="flex nameBar">
                 <div>First name: {profileInfo.firstName}</div>
                 <div>Last name: {profileInfo.lastName}</div>
