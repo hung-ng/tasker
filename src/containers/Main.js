@@ -13,7 +13,6 @@ const Main = () => {
             <Switch>
                 <Route path="/profile" component={Profile} />
                 <Route path="/groups/:group_id/tasks/:task_id" component={Task} />
-                {/* <Route path="/groups/:group_id/createtasks" component={} /> */}
                 <Route path="/groups/:group_id" component={AllTasks} />
                 <Route exact path="/groups" component={AllGroups} />
             </Switch>
