@@ -123,11 +123,20 @@ const Task = () => {
 
     const changeTaskStatus = async (e) => {
         e.preventDefault();
-        setJustChange(false)
-        await db.collection("groups").doc(group_id).collection("tasks").doc(task_id).update({
-            done: !taskInfo.done
-        })
-        setJustChange(true)
+        if (currentUser === taskInfo.creator_id) {
+            try {
+                setJustChange(false)
+                await db.collection("groups").doc(group_id).collection("tasks").doc(task_id).update({
+                    done: !taskInfo.done
+                })
+                setJustChange(true)
+            }
+            catch (err) {
+                console.log(err.message);
+            }
+        } else {
+            alert("You are not the group creator")
+        }
     }
 
     useEffect(() => {
@@ -135,12 +144,12 @@ const Task = () => {
             try {
                 const res = await db.collection("groups").doc(group_id).get()
                 const data = res.data()
-                if(!data.members_id.includes(currentUser) && currentUser !== data.creator_id){
+                if (!data.members_id.includes(currentUser) && currentUser !== data.creator_id) {
                     setNotExist(true)
                 }
                 const res1 = await db.collection('groups').doc(group_id).collection('tasks').doc(task_id).get()
                 const data1 = res1.data()
-                if (data1 === undefined){
+                if (data1 === undefined) {
                     setNotExist(true)
                 }
                 const res2 = await db.collection('groups').doc(group_id).get()
@@ -155,7 +164,7 @@ const Task = () => {
                     members_id: data2.members_id,
                     done: data1.done
                 })
-                if(data1.done){
+                if (data1.done) {
                     setMarkStatus("Mark task as on going")
                 } else {
                     setMarkStatus("Mark task as done")
@@ -199,7 +208,7 @@ const Task = () => {
         getCommentInfo()
     }, [taskInfo, newComment, group_id, task_id])
 
-    if (notExist){
+    if (notExist) {
         return <Redirect to="/groups" />
     }
 
