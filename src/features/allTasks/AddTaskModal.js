@@ -125,16 +125,18 @@ const AddTaskModal = (props) => {
                 attachmentsName: fileName,
                 visible: true
             })
-            const res2 = await db.collection("notifications").add({
-                time: now,
-                content: props.creator + " added a new task to group " + props.groupName,
-                path: "/groups/" + group_id + "/tasks/" + res1.id
-            })
-            for (var i = 0; i < props.members_id.length; i++) {
-                await db.collection("users").doc(props.members_id[i]).update({
-                    notifications: firebase.firestore.FieldValue.arrayUnion(res2.id),
-                    unseen_notifications: true
+            if (props.members_id.length > 0) {
+                const res2 = await db.collection("notifications").add({
+                    time: now,
+                    content: props.creator + " added a new task to group " + props.groupName,
+                    path: "/groups/" + group_id + "/tasks/" + res1.id
                 })
+                for (var i = 0; i < props.members_id.length; i++) {
+                    await db.collection("users").doc(props.members_id[i]).update({
+                        notifications: firebase.firestore.FieldValue.arrayUnion(res2.id),
+                        unseen_notifications: true
+                    })
+                }
             }
             setValue("")
             playSwooshSound()

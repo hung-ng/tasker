@@ -124,16 +124,18 @@ const EditTaskModal = (props) => {
                 attachments: fileUrl,
                 attachmentsName: fileName
             })
-            const res = await db.collection("notifications").add({
-                time: now,
-                content: "Task " + props.task + " was edited",
-                path: "/groups/" + group_id + "/tasks/" + task_id
-            })
-            for (var i = 0; i < props.members_id.length; i++) {
-                await db.collection("users").doc(props.members_id[i]).update({
-                    notifications: firebase.firestore.FieldValue.arrayUnion(res.id),
-                    unseen_notifications: true
+            if (props.members_id.length > 0) {
+                const res = await db.collection("notifications").add({
+                    time: now,
+                    content: "Task " + props.task + " was edited",
+                    path: "/groups/" + group_id + "/tasks/" + task_id
                 })
+                for (var i = 0; i < props.members_id.length; i++) {
+                    await db.collection("users").doc(props.members_id[i]).update({
+                        notifications: firebase.firestore.FieldValue.arrayUnion(res.id),
+                        unseen_notifications: true
+                    })
+                }
             }
             setValue("")
             playSwooshSound()
