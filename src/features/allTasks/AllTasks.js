@@ -152,7 +152,7 @@ const AllTasks = () => {
             }
         }
         getGroupNameandCreator()
-    }, [showEditName, group_id])
+    }, [showEditName, group_id, currentUser])
 
     useEffect(() => {
         async function getAllTask() {
@@ -191,7 +191,7 @@ const AllTasks = () => {
             }
         }
         getAllMembersId()
-    }, [showMemberModal, removeMember, group_id])
+    }, [showMemberModal, removeMember, group_id, currentUser])
 
     if(notAvailable1 && notAvailable2){
         console.log("alo");

@@ -148,7 +148,7 @@ const Task = () => {
             }
         }
         getTaskInfo()
-    }, [showModal, group_id, task_id, visibility])
+    }, [showModal, group_id, task_id, visibility, currentUser])
 
     useEffect(() => {
         async function getCommentInfo() {

@@ -1,4 +1,3 @@
-import debounce from 'lodash.debounce';
 import React, { useEffect, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { VscBell, VscBellDot, VscLoading } from 'react-icons/vsc'
@@ -83,7 +82,7 @@ const NotificationContainer = () => {
                     lastKey = i
                 }
             }
-            if (notificationIdList.length == key + 6) {
+            if (notificationIdList.length === key + 6) {
                 lastKey = -1
             }
             setLastKey(lastKey)
@@ -146,7 +145,7 @@ const NotificationContainer = () => {
                         lastKey = i
                     }
                 }
-                if (notificationIdList.length == 5) {
+                if (notificationIdList.length === 5) {
                     lastKey = -1
                 }
                 setNotificationDetailList(notis)
