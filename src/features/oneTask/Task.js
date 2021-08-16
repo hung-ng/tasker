@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { db } from '../../firebase/config';
 import './task.css'
 import SubmitTask from './NewComment';
@@ -31,6 +31,8 @@ const Task = () => {
     })
 
     const { currentUser } = useAuth()
+
+    const [notExist, setNotExist] = useState(false)
 
     const [commentInfo, setCommentInfo] = useState([])
 
@@ -118,8 +120,16 @@ const Task = () => {
     useEffect(() => {
         async function getTaskInfo() {
             try {
+                const res = await db.collection("groups").doc(group_id).get()
+                const data = res.data()
+                if(!data.members_id.includes(currentUser) && currentUser !== data.creator_id){
+                    setNotExist(true)
+                }
                 const res1 = await db.collection('groups').doc(group_id).collection('tasks').doc(task_id).get()
                 const data1 = res1.data()
+                if (data1 === undefined){
+                    setNotExist(true)
+                }
                 const res2 = await db.collection('groups').doc(group_id).get()
                 const data2 = res2.data()
                 setTaskInfo({
@@ -169,6 +179,10 @@ const Task = () => {
         }
         getCommentInfo()
     }, [taskInfo, newComment, group_id, task_id])
+
+    if (notExist){
+        return <Redirect to="/groups" />
+    }
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>

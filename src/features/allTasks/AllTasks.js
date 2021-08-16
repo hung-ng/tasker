@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TaskBar from "./TaskBar";
 import { db } from "../../firebase/config";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import './allTasks.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faEdit, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
@@ -24,6 +24,10 @@ const AllTasks = () => {
     const [groupNameAndCreator, setGroupNameAndCreator] = useState({})
 
     const [allMembersId, setAllMembersId] = useState([])
+
+    const [notAvailable1, setNotAvailable1] = useState(false)
+    
+    const [notAvailable2, setNotAvailable2] = useState(false)
 
     const [showTaskModal, setShowTaskModal] = useState(false);
 
@@ -132,6 +136,9 @@ const AllTasks = () => {
                     name: data.name,
                     creator_id: data.creator_id
                 }
+                if (currentUser !== object.creator_id){
+                    setNotAvailable1(true)
+                }
                 const res1 = await db.collection('users').doc(object.creator_id).get()
                 const data1 = res1.data()
                 setGroupNameAndCreator({
@@ -172,8 +179,11 @@ const AllTasks = () => {
             try {
                 const res = await db.collection('groups').doc(group_id).get();
                 const data = res.data();
-                var memebersId = data.members_id
-                setAllMembersId(memebersId)
+                var membersId = data.members_id
+                if(!membersId.includes(currentUser)){
+                    setNotAvailable2(true)
+                }
+                setAllMembersId(membersId)
                 setRemoveMember(false)
             }
             catch (err) {
@@ -182,6 +192,11 @@ const AllTasks = () => {
         }
         getAllMembersId()
     }, [showMemberModal, removeMember, group_id])
+
+    if(notAvailable1 && notAvailable2){
+        console.log("alo");
+        return <Redirect to="/groups" />
+    }
 
     return (
         <div style={{ width: "100%", margin: "20px 40px" }}>
