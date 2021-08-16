@@ -4,7 +4,7 @@ import { db } from '../../firebase/config';
 import './task.css'
 import SubmitTask from './NewComment';
 import CommentBar from './CommentBar';
-import { faEdit, faEye, faEyeSlash, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faEdit, faEye, faEyeSlash, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth } from '../../firebase/Auth';
 import EditTaskModal from './EditTaskModal';
@@ -36,9 +36,13 @@ const Task = () => {
 
     const [commentInfo, setCommentInfo] = useState([])
 
+    const [markStatus, setMarkStatus] = useState("Mark task as done")
+
     const [commentNumber, setCommentNumber] = useState(0)
 
     const [newComment, setNewComment] = useState(false)
+
+    const [justChange, setJustChange] = useState(false)
 
     const [showModal, setShowModal] = useState(false);
 
@@ -117,6 +121,15 @@ const Task = () => {
         }
     }
 
+    const changeTaskStatus = async (e) => {
+        e.preventDefault();
+        setJustChange(false)
+        await db.collection("groups").doc(group_id).collection("tasks").doc(task_id).update({
+            done: !taskInfo.done
+        })
+        setJustChange(true)
+    }
+
     useEffect(() => {
         async function getTaskInfo() {
             try {
@@ -139,8 +152,14 @@ const Task = () => {
                     attachments: data1.attachments,
                     attachmentsName: data1.attachmentsName,
                     creator_id: data2.creator_id,
-                    members_id: data2.members_id
+                    members_id: data2.members_id,
+                    done: data1.done
                 })
+                if(data1.done){
+                    setMarkStatus("Mark task as on going")
+                } else {
+                    setMarkStatus("Mark task as done")
+                }
                 setVisibility(data1.visible)
             }
             catch (err) {
@@ -148,7 +167,7 @@ const Task = () => {
             }
         }
         getTaskInfo()
-    }, [showModal, group_id, task_id, visibility, currentUser])
+    }, [showModal, group_id, task_id, visibility, currentUser, justChange])
 
     useEffect(() => {
         async function getCommentInfo() {
@@ -185,7 +204,7 @@ const Task = () => {
     }
 
     return (
-        <div style={{ width: "100%", margin: "20px 40px" }}>
+        <div style={{ width: "100%", margin: "3vh 2vw" }}>
             <EditTaskModal members_id={taskInfo.members_id} task={taskInfo.name} show={showModal} handleClose={handleCloseModal} handleShow={handleShowModal} />
             <div className="flex main-header">
                 <div className="flex">
@@ -194,6 +213,7 @@ const Task = () => {
                         <div onClick={editTask} title="Edit" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
                         {(visibility === true) && <div onClick={changeVisible} title="Comments visible to everyone" className="icon"><FontAwesomeIcon icon={faEye} size="1x" /></div>}
                         {(visibility === false) && <div onClick={changeVisible} title="Comments visible to commentor and creator only" className="icon"><FontAwesomeIcon icon={faEyeSlash} size="1x" /></div>}
+                        <div onClick={changeTaskStatus} title={markStatus} className="icon"><FontAwesomeIcon icon={faCheckCircle} size="1x" /></div>
                         <div onClick={deleteTask} title="Delete" className="icon"><FontAwesomeIcon icon={faTrashAlt} size="1x" /></div>
                     </div>
                 </div>

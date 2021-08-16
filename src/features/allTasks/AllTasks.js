@@ -31,6 +31,12 @@ const AllTasks = () => {
 
     const [showTaskModal, setShowTaskModal] = useState(false);
 
+    const [done, setDone] = useState({})
+
+    const [onGoing, setOnGoing] = useState({
+        fontWeight: "bold"
+    })
+
     const handleCloseTaskModal = () => setShowTaskModal(false);
 
     const handleShowTaskModal = () => setShowTaskModal(true);
@@ -127,6 +133,50 @@ const AllTasks = () => {
         history.goBack()
     }
 
+    const getOnGoingTasks = async (e) => {
+        e.preventDefault();
+        try {
+            await db.collection('groups').doc(group_id).collection('tasks').where("done", "==", false).orderBy("deadline").onSnapshot((snapShot) => {
+                setAllTasks(snapShot.docs.map((doc) => {
+                    return {
+                        data: doc.data(),
+                        id: doc.id
+                    }
+                })
+                )
+            })
+            setOnGoing({
+                fontWeight: "bold"
+            })
+            setDone({})
+        }
+        catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    const getDoneTasks = async (e) => {
+        e.preventDefault();
+        try {
+            await db.collection('groups').doc(group_id).collection('tasks').where("done", "==", true).orderBy("deadline", "desc").onSnapshot((snapShot) => {
+                setAllTasks(snapShot.docs.map((doc) => {
+                    return {
+                        data: doc.data(),
+                        id: doc.id
+                    }
+                })
+                )
+            })
+            setDone({
+                fontWeight: "bold"
+            })
+            setOnGoing({})
+        }
+        catch (err) {
+            console.log(err.message);
+        }
+    }
+
     useEffect(() => {
         async function getGroupNameandCreator() {
             try {
@@ -157,7 +207,7 @@ const AllTasks = () => {
     useEffect(() => {
         async function getAllTask() {
             try {
-                await db.collection('groups').doc(group_id).collection('tasks').orderBy("deadline").onSnapshot((snapShot) => {
+                await db.collection('groups').doc(group_id).collection('tasks').where("done", "==", false).orderBy("deadline").onSnapshot((snapShot) => {
                     setAllTasks(snapShot.docs.map((doc) => {
                         return {
                             data: doc.data(),
@@ -199,7 +249,7 @@ const AllTasks = () => {
     }
 
     return (
-        <div style={{ width: "100%", margin: "20px 40px" }}>
+        <div style={{ width: "100%", margin: "3vh 2vw" }}>
             <AddTaskModal members_id={allMembersId} creator={groupNameAndCreator.creatorName} groupName={groupNameAndCreator.groupName} show={showTaskModal} handleClose={handleCloseTaskModal} handleShow={handleShowTaskModal} />
 
             <AddMemberModal creator={groupNameAndCreator.creatorName} groupName={groupNameAndCreator.groupName} show={showMemberModal} handleClose={handleCloseMemberModal} handleShow={handleShowMemberModal} />
@@ -219,6 +269,10 @@ const AllTasks = () => {
             <br />
             <div className="flex container">
                 <div>
+                    <div className="flex taskStatusChoice">
+                        <div style={onGoing} onClick={getOnGoingTasks} className="cursor">On going</div>
+                        <div style={done} onClick={getDoneTasks} className="cursor">Done</div>
+                    </div>
                     {allTasks.map(task => {
                         return <TaskBar name={task.data.name} deadline={task.data.deadline} onClick={onClickHandle} id={task.id} />
                     })}

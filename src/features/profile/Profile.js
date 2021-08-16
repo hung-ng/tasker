@@ -56,7 +56,7 @@ const Profile = () => {
     }, [showEditModal, currentUser])
 
     return (
-        <div style={{ width: "100%", margin: "20px 40px" }}>
+        <div style={{ width: "100%", margin: "3vh 2vw" }}>
             <EditProfileModal show={showEditModal} handleClose={handleCloseEditModal} handleShow={handleShowEditModal} />
             <ChangePasswordModal show={showModal} handleClose={handleCloseModal} handleShow={handleShowModal} />
             <div className="flex">

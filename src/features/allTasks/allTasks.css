@@ -99,3 +99,9 @@
     margin-left: 0.3rem;
     font-family: sans-serif;
 }
+
+.taskStatusChoice{
+    width: 150px;
+    justify-content: space-between;
+    margin: 0px 10px 20px;
+}

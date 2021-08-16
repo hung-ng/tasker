@@ -123,7 +123,8 @@ const AddTaskModal = (props) => {
                 content: data.content,
                 attachments: fileUrl,
                 attachmentsName: fileName,
-                visible: true
+                visible: true,
+                done: false
             })
             if (props.members_id.length > 0) {
                 const res2 = await db.collection("notifications").add({

@@ -70,7 +70,7 @@ const AllGroups = () => {
     }, [allGroupsId])
 
     return (
-        <div style={{ width: "100%", margin: "20px 40px" }}>
+        <div style={{ width: "100%", margin: "3vh 2vw" }}>
             <AddGroupModal show={show} handleClose={handleClose} handleShow={handleShow} />
             <div className="flex main-header">
                 <div className="groupName">Groups</div>
