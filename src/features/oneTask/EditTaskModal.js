@@ -61,6 +61,7 @@ const EditTaskModal = (props) => {
 
     const handleClose = () => {
         setError("")
+        setValue("")
         props.handleClose()
     }
 
@@ -134,6 +135,7 @@ const EditTaskModal = (props) => {
                     unseen_notifications: true
                 })
             }
+            setValue("")
             playSwooshSound()
             props.handleClose()
             setLoading(false)

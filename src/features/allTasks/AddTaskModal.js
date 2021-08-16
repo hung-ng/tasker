@@ -61,6 +61,7 @@ const AddTaskModal = (props) => {
 
     const handleClose = () => {
         setError("")
+        setValue("")
         props.handleClose()
     }
 
@@ -135,6 +136,7 @@ const AddTaskModal = (props) => {
                     unseen_notifications: true
                 })
             }
+            setValue("")
             playSwooshSound()
             props.handleClose()
             setLoading(false)
