@@ -19,6 +19,7 @@
 
 .groupName {
     font-size: 50px;
+    max-width: 40vw;
 }
 
 .creator {
