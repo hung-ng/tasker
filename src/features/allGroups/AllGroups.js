@@ -4,10 +4,11 @@ import { useAuth } from '../../firebase/Auth';
 import { db } from '../../firebase/config';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPlusSquare, faSearch } from "@fortawesome/free-solid-svg-icons";
 import AddGroupModal from './AddGroupModal';
 import SearchBar from './SearchBar';
 import NotificationContainer from '../notifications/NotificationContainer';
+import FindGroupModal from './FindGroupModal';
 
 
 const AllGroups = () => {
@@ -24,10 +25,15 @@ const AllGroups = () => {
 
     const [show, setShow] = useState(false);
 
+    const [showFindGroup, setShowFindGroup] = useState(false);
+
     const handleClose = () => setShow(false);
 
     const handleShow = () => setShow(true);
 
+    const handleCloseFindGroup = () => setShowFindGroup(false)
+
+    const handleShowFindGroup = () => setShowFindGroup(true)
 
     const onClickHandle = (id) => {
         history.push("/groups/" + id)
@@ -72,10 +78,12 @@ const AllGroups = () => {
     return (
         <div style={{ width: "100%", margin: "3vh 2vw" }}>
             <AddGroupModal show={show} handleClose={handleClose} handleShow={handleShow} />
+            <FindGroupModal show={showFindGroup} handleClose={handleCloseFindGroup} handleShow={handleShowFindGroup} />
             <div className="flex main-header">
                 <div className="groupName">Groups</div>
                 <SearchBar value={searchTerm} setSearchTerm={setSearchTerm} />
                 <div onClick={handleShow} title="Creat new group" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>
+                <div onClick={handleShowFindGroup} title="Find group" className="icon"><FontAwesomeIcon icon={faSearch} size="2x" /></div>
                 <NotificationContainer />
             </div>
             <br />

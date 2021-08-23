@@ -50,6 +50,10 @@
   cursor: pointer;
 }
 
+.underlined{
+  text-decoration: underline;
+}
+
 div{
   font-family: 'Open Sans', sans-serif;
 }

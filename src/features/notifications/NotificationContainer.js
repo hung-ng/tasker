@@ -45,11 +45,10 @@ const CustomToggleDot = React.forwardRef(({ children, onClick, changeStatus }, r
     )
 });
 
-const CustomLink = React.forwardRef(({ children, style, className, 'aria-labelledby': labeledBy }, ref) => (
+const CustomLink = React.forwardRef(({ children, style, className }, ref) => (
     <Link to={children.path} ref={ref}
         style={style}
-        className={className}
-        aria-labelledby={labeledBy}>
+        className={className}>
         <div className="notiContent">{children.content}</div>
         <div className="notiTime">{children.time.toDate().toLocaleString()}</div>
     </Link>

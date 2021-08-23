@@ -12,6 +12,7 @@ import MemberBar from "./MemberBar";
 import EditGroupNameModal from "./EditGroupNameModal";
 import firebase from 'firebase';
 import NotificationContainer from "../notifications/NotificationContainer";
+import RequestContainer from "./RequestContainer";
 
 const AllTasks = () => {
 
@@ -56,6 +57,8 @@ const AllTasks = () => {
     const [removeMember, setRemoveMember] = useState(false)
 
     const { group_id } = useParams()
+
+    const [acceptMember, setAcceptMember] = useState(false)
 
     const checkPermission = () => {
         if (currentUser === groupNameAndCreator.creator_id) {
@@ -235,13 +238,14 @@ const AllTasks = () => {
                 }
                 setAllMembersId(membersId)
                 setRemoveMember(false)
+                setAcceptMember(false)
             }
             catch (err) {
                 console.log(err.message);
             }
         }
         getAllMembersId()
-    }, [showMemberModal, removeMember, group_id, currentUser])
+    }, [showMemberModal, removeMember, group_id, currentUser, acceptMember])
 
     if(notAvailable1 && notAvailable2){
         console.log("alo");
@@ -264,6 +268,7 @@ const AllTasks = () => {
                 </div>
                 <div className="creator">Creator: {groupNameAndCreator.creatorName}</div>
                 <div onClick={createTask} title="Add task" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>
+                <RequestContainer setAcceptMember={setAcceptMember} />
                 <NotificationContainer />
             </div>
             <br />

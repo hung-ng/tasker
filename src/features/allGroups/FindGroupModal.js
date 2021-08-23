@@ -11,9 +11,7 @@ import firebase from 'firebase';
 import useSound from 'use-sound';
 import SwooshSound from '../../resources/SwooshSound.mp3';
 
-const AddGroupModal = (props) => {
-
-    const [error, setError] = useState("")
+const FindGroupModal = (props) => {
 
     const { currentUser } = useAuth()
 
@@ -22,40 +20,40 @@ const AddGroupModal = (props) => {
     const [loading, setLoading] = useState(false)
 
     const handleClose = () => {
-        setError("")
         props.handleClose()
     }
 
     const formController = (e) => {
         e.preventDefault();
         const dataForm = {
-            name: e.target.name.value
+            id: e.target.id.value
         };
 
-        if (dataForm.name.trim() === "") {
-            setError("Group name is missing")
-        }
-
-        if (dataForm.name.trim() !== "") {
-            formModel(dataForm.name);
+        if (dataForm.id.trim() !== "") {
+            formModel(dataForm.id);
         }
     }
 
-    const formModel = async (group_name) => {
+    const formModel = async (groupId) => {
         try {
             setLoading(true);
-            const res = await db.collection("groups").doc()
-            res.set({
-                name: group_name,
-                creator_id: currentUser,
-                members_id: [],
-                requests: []
-            })
-            const group_id = res.id
-
-            await db.collection("users").doc(currentUser).update({
-                groups_id: firebase.firestore.FieldValue.arrayUnion(group_id)
-            })
+            const res = await db.collection("groups").doc(groupId).get()
+            if (!res.exists){
+                alert("Group not exist")
+                setLoading(false)
+                return
+            } else {
+                const res = await db.collection("users").doc(currentUser).get()
+                const data = res.data()
+                if(data.groups_id.includes(groupId)){
+                    alert("You are already in this group");
+                    setLoading(false)
+                    return
+                }
+                await db.collection("groups").doc(groupId).update({
+                    requests: firebase.firestore.FieldValue.arrayUnion(currentUser)
+                })
+            }
             playSwooshSound()
             setLoading(false)
             props.handleClose()
@@ -73,14 +71,13 @@ const AddGroupModal = (props) => {
             keyboard={false}
         >
             <ModalHeader closeButton>
-                <ModalTitle>Create new group</ModalTitle>
+                <ModalTitle>Find group by Id</ModalTitle>
             </ModalHeader>
             <ModalBody>
                 <form id="addGroup" onSubmit={formController}>
                     <div className="input-wrapper">
-                        <label htmlFor="groupName">Group name</label>
-                        <input id="groupName" type="text" name="name" maxLength="40" />
-                        <div className="error">{error}</div>
+                        <label htmlFor="groupId">Group Id</label>
+                        <input id="groupId" type="text" name="id" maxLength="30" />
                     </div>
                 </form>
             </ModalBody>
@@ -88,11 +85,11 @@ const AddGroupModal = (props) => {
                 <Button disabled={loading} variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button disabled={loading} type="submit" form="addGroup" variant="primary">Create</Button>
+                <Button disabled={loading} type="submit" form="addGroup" variant="primary">Send join request</Button>
             </ModalFooter>
         </Modal>
     )
 }
 
 
-export default AddGroupModal;
+export default FindGroupModal;
