@@ -266,7 +266,10 @@ const AllTasks = () => {
                     <div onClick={editGroupName} title="Change group name" className="icon"><FontAwesomeIcon icon={faEdit} size="1x" /></div>
                     <div onClick={leaveGroup} title="Leave group" className="leaveIcon"><FontAwesomeIcon icon={faDoorOpen} size="1x" /></div>
                 </div>
-                <div className="creator">Creator: {groupNameAndCreator.creatorName}</div>
+                <div className="creatorAndId">
+                <div>Creator: {groupNameAndCreator.creatorName}</div>
+                <div>Group Id: {group_id}</div>
+                </div>
                 <div onClick={createTask} title="Add task" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>
                 <RequestContainer setAcceptMember={setAcceptMember} />
                 <NotificationContainer />
