@@ -271,7 +271,7 @@ const AllTasks = () => {
                 <div>Group Id: {group_id}</div>
                 </div>
                 <div onClick={createTask} title="Add task" className="icon"><FontAwesomeIcon icon={faPlusSquare} size="2x" /></div>
-                <RequestContainer setAcceptMember={setAcceptMember} />
+                {checkPermission() &&<RequestContainer setAcceptMember={setAcceptMember} />}
                 <NotificationContainer />
             </div>
             <br />

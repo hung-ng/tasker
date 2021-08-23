@@ -8,6 +8,7 @@ import firebase from 'firebase';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <span
+        title="Join group requests"
         ref={ref}
         onClick={(e) => {
             e.preventDefault();
