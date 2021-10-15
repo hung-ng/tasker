@@ -232,7 +232,7 @@ const Task = () => {
             <br />
             <div className="content" style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: urlify(taskInfo.content) }}></div>
             {
-                (taskInfo.attachments)
+                (taskInfo.attachments && taskInfo.attachments.length > 0)
                 && (
                     <div>
                         <br />

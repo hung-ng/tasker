@@ -62,6 +62,8 @@ const AddTaskModal = (props) => {
     const handleClose = () => {
         setError("")
         setValue("")
+        setFileUrl([])
+        setFileName([])
         props.handleClose()
     }
 
@@ -140,6 +142,8 @@ const AddTaskModal = (props) => {
                 }
             }
             setValue("")
+            setFileName([])
+            setFileUrl([])
             playSwooshSound()
             props.handleClose()
             setLoading(false)
