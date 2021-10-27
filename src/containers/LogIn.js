@@ -10,11 +10,23 @@ const LogIn = () => {
 
     const [count, setCount] = useState(0)
 
+    const [emailValue, setEmailValue] = useState('')
+
+    const onChangeEmail = (event) => {
+        setEmailValue(event.target.value);
+    };
+
+    const [passwordValue, setPasswordValue] = useState('')
+
+    const onChangePassword = (event) => {
+        setPasswordValue(event.target.value);
+    };
+
     const { login, currentUser } = useAuth()
 
     const history = useHistory();
 
-    const {email, password} = useParams()
+    const { email, password } = useParams()
 
     const loginController = (e) => {
         e.preventDefault();
@@ -59,8 +71,11 @@ const LogIn = () => {
         }
     }
 
-    if(email&&password&&count===0){
+    if (email && password && count === 0) {
         setCount(prev => prev + 1)
+
+        setEmailValue(email)
+        setPasswordValue(password)
 
         const dataLogin = {
             email: email,
@@ -93,10 +108,10 @@ const LogIn = () => {
                 <form id="login-form" onSubmit={loginController}>
                     <div className="error">{error}</div>
                     <div className="input-wrapper">
-                        <input type="email" name="email" placeholder="Email" />
+                        <input type="email" name="email" placeholder="Email" value={emailValue} onChange={onChangeEmail} />
                     </div>
                     <div className="input-wrapper">
-                        <input type="password" name="password" placeholder="Password" />
+                        <input type="password" name="password" placeholder="Password" value={passwordValue} onChange={onChangePassword} />
                     </div>
                     <button className="btn btn-primary" disabled={loading} type="submit">
                         Login
