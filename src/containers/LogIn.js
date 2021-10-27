@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
 import { useAuth } from '../firebase/Auth';
 import './login.css'
 
@@ -8,9 +8,13 @@ const LogIn = () => {
 
     const [loading, setLoading] = useState(false)
 
+    const [count, setCount] = useState(0)
+
     const { login, currentUser } = useAuth()
 
     const history = useHistory();
+
+    const {email, password} = useParams()
 
     const loginController = (e) => {
         e.preventDefault();
@@ -52,6 +56,27 @@ const LogIn = () => {
                 setError("Email or password is incorrect")
             }
             setLoading(false)
+        }
+    }
+
+    if(email&&password&&count===0){
+        setCount(prev => prev + 1)
+
+        const dataLogin = {
+            email: email,
+            password: password
+        };
+
+        if (dataLogin.email.trim() === "") {
+            setError("Email is missing")
+        } else if (dataLogin.password.trim() === "") {
+            setError("Password is missing")
+        } else {
+            setError("")
+        }
+
+        if (dataLogin.email !== "" && dataLogin.password !== "") {
+            loginModel(dataLogin.email.trim(), dataLogin.password.trim());
         }
     }
 
