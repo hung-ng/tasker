@@ -1,0 +1,34 @@
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container .aside {
+  width: 60vh;
+  height: 60vh;
+  border: 1px black solid;
+}
+
+.login-container .aside .header h1 {
+  font-size: 40px;
+  color: #615f5f;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#login-form {
+  padding: 20px;
+}
+
+#forgotPassword {
+  margin: 0px 0px 0px 200px;
+}
+
+#login-form input {
+  border-radius: 5px;
+  margin: 5px 10px;
+  width: 50vh;
+  height: 40px;
+}

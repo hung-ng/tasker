@@ -1,22 +1,17 @@
 import React from "react";
-import './allTasks.css'
+import "./allTasks.css";
 
 const TaskBar = (props) => {
+  const getTaskDetails = () => {
+    props.onClick(props.id);
+  };
 
-    const getTaskDetails = () => {
-        props.onClick(props.id)
-    }
-
-    return (
-        <div className="hover flex task-bar" onClick={getTaskDetails}>
-            <div className="taskName">
-                {props.name}
-            </div>
-            <div>
-                Deadline: {props.deadline}
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="hover flex task-bar" onClick={getTaskDetails}>
+      <div className="taskName">{props.name}</div>
+      <div>Deadline: {props.deadline}</div>
+    </div>
+  );
+};
 
 export default TaskBar;

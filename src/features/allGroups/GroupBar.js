@@ -1,17 +1,16 @@
 import React from "react";
-import "./allGroups.css"
+import "./allGroups.css";
 
 const GroupBar = (props) => {
+  const getGroupDetails = () => {
+    props.onClick(props.id);
+  };
 
-    const getGroupDetails = () => {
-        props.onClick(props.id)
-    }
-    
-    return (
-        <div className="hover group-bar" onClick={getGroupDetails}>
-               {props.name}
-        </div>
-    )
-}
+  return (
+    <div className="hover group-bar" onClick={getGroupDetails}>
+      {props.name}
+    </div>
+  );
+};
 
 export default GroupBar;

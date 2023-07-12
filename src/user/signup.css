@@ -1,0 +1,58 @@
+.register-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-container .aside {
+  width: 60vh;
+  height: 80vh;
+  border: 1px black solid;
+}
+
+.register-container .aside .header h1 {
+  font-size: 40px;
+  color: #615f5f;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.register-container .input-name-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.register-container .input-name-wrapper .input-wrapper {
+  width: 48%;
+}
+
+.register-container .input-wrapper input {
+  outline: none;
+  border: 1px solid #dbdbdb;
+  padding: 10px 15px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.register-container .input-wrapper {
+  margin-bottom: 10px;
+}
+
+#register-form {
+  padding: 20px;
+}
+
+#register-form input {
+  border-radius: 5px;
+  margin: 5px 10px;
+  width: 50vh;
+  height: 40px;
+}
+
+#register-form .input-name-wrapper input {
+  border-radius: 5px;
+  margin: 5px 10px;
+  width: 22vh;
+  height: 40px;
+}

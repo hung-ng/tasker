@@ -1,82 +1,82 @@
-.content{
-    font-size: 20px;
-    font-weight: lighter;
+.content {
+  font-size: 20px;
+  font-weight: lighter;
 }
 
-.name{
-    font-size: 50px;
-    max-width: 50vw;
+.name {
+  font-size: 50px;
+  max-width: 50vw;
 }
 
-.commentForm{
-    position: relative;
+.commentForm {
+  position: relative;
 }
 
-.commentForm .submit{
-    height: 30px;
-    text-align: center;
-    margin-bottom: 0px;
-    position: absolute;
-    bottom: 0px;
-    left: 600px;
+.commentForm .submit {
+  height: 30px;
+  text-align: center;
+  margin-bottom: 0px;
+  position: absolute;
+  bottom: 0px;
+  left: 600px;
 }
 
-.commentForm .textarea{
-	box-sizing: border-box;
-	border: 0.5px solid gray;
-	border-radius: 3px;
-	resize: none;
-	font-size: 20px;
-	line-height: 24px;
-	overflow: auto;
-	height: auto;
-	padding: 8px;
-	box-shadow: 0px 4px 10px -8px black;
-    width: 600px;
+.commentForm .textarea {
+  box-sizing: border-box;
+  border: 0.5px solid gray;
+  border-radius: 3px;
+  resize: none;
+  font-size: 20px;
+  line-height: 24px;
+  overflow: auto;
+  height: auto;
+  padding: 8px;
+  box-shadow: 0px 4px 10px -8px black;
+  width: 600px;
 }
 
-.commentbar{
-    width: 650px;
-    box-sizing: border-box;
-	border: 0.5px solid gray;
-	border-radius: 20px;
-    margin: 10px 0px;
-    padding: 5px 10px;
+.commentbar {
+  width: 650px;
+  box-sizing: border-box;
+  border: 0.5px solid gray;
+  border-radius: 20px;
+  margin: 10px 0px;
+  padding: 5px 10px;
 }
 
-.commentbar .flex{
-    display: flex;
-    justify-content: space-between;
+.commentbar .flex {
+  display: flex;
+  justify-content: space-between;
 }
 
-.commentbar .content{
-    width: 530px;
-    overflow-wrap: break-word;
+.commentbar .content {
+  width: 530px;
+  overflow-wrap: break-word;
 }
 
-.deletebutton{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    margin: 0px 0px 20px 5px;
-    cursor: pointer;
-    text-decoration: underline;
+.deletebutton {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  margin: 0px 0px 20px 5px;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-.commentsection{
-    width: 700px;
-    position: relative;
+.commentsection {
+  width: 700px;
+  position: relative;
 }
 
-.iconflex{
-    margin-top: 15px;
-    margin-left: 20px;
-    justify-content: space-around;
-    width: 120px;
+.iconflex {
+  margin-top: 15px;
+  margin-left: 20px;
+  justify-content: space-around;
+  width: 120px;
 }
 
-#editTask .input-wrapper textarea{
-    border-radius: 5px;
-    margin: 5px 10px;
-    width: 380px;
+#editTask .input-wrapper textarea {
+  border-radius: 5px;
+  margin: 5px 10px;
+  width: 380px;
 }

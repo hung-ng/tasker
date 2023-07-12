@@ -1,118 +1,118 @@
 .task-bar {
-    padding: 5px 40px;
-    margin: 0px 0px 5px 0px;
-    border: 1px solid gray;
-    border-radius: 0.5cm;
-    line-height: 40px;
-    font-size: x-large;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    width: 45vw;
-    min-height: 80px;
+  padding: 5px 40px;
+  margin: 0px 0px 5px 0px;
+  border: 1px solid gray;
+  border-radius: 0.5cm;
+  line-height: 40px;
+  font-size: x-large;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  width: 45vw;
+  min-height: 80px;
 }
 
 .task-bar .taskName {
-    width: 22vw;
-    overflow-wrap: break-word;
+  width: 22vw;
+  overflow-wrap: break-word;
 }
 
 .groupName {
-    font-size: 50px;
-    max-width: 40vw;
+  font-size: 50px;
+  max-width: 40vw;
 }
 
 .creatorAndId {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 
 .icon {
-    margin-bottom: 42.4px;
-    cursor: pointer;
+  margin-bottom: 42.4px;
+  cursor: pointer;
 }
 
 .container {
-    position: relative;
+  position: relative;
 }
 
 .members {
-    font-size: 20px;
-    padding: 10px;
-    border: 1px solid black;
-    text-align: center;
-    width: 25vw;
-    min-height: 200px;
-    position: absolute;
-    right: 10px;
+  font-size: 20px;
+  padding: 10px;
+  border: 1px solid black;
+  text-align: center;
+  width: 25vw;
+  min-height: 200px;
+  position: absolute;
+  right: 10px;
 }
 
 .addText {
-    font-size: 13px;
-    margin-left: 250px;
-    cursor: pointer;
-    text-decoration: underline;
+  font-size: 13px;
+  margin-left: 250px;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .memberBar {
-    font-style: italic;
-    margin-left: 10px;
-    text-align: start;
-    font-size: 15px;
-    width: 270px;
+  font-style: italic;
+  margin-left: 10px;
+  text-align: start;
+  font-size: 15px;
+  width: 270px;
 }
 
 .removeUser {
-    font-size: 15px;
-    margin-left: 10px;
-    text-decoration: underline;
-    color: blue;
-    cursor: pointer;
+  font-size: 15px;
+  margin-left: 10px;
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
 }
 
 #addTask .input-wrapper textarea {
-    border-radius: 5px;
-    margin: 5px 10px;
-    width: 380px;
+  border-radius: 5px;
+  margin: 5px 10px;
+  width: 380px;
 }
 
 .leaveIcon {
-    margin-bottom: 42.4px;
-    margin-left: 10px;
-    cursor: pointer;
+  margin-bottom: 42.4px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
-.attachmentsLetter{
-    font-size: large;
+.attachmentsLetter {
+  font-size: large;
 }
 
-.fileLabel{
-    background-color: black;
-    color: white;
-    padding: 0.5rem;
-    font-family: sans-serif;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    margin-top: 1rem;
+.fileLabel {
+  background-color: black;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
 }
 
-#file-chosen{
-    margin-left: 0.3rem;
-    font-family: sans-serif;
+#file-chosen {
+  margin-left: 0.3rem;
+  font-family: sans-serif;
 }
 
-.taskStatusChoice{
-    width: 150px;
-    justify-content: space-between;
-    margin: 0px 10px 20px;
+.taskStatusChoice {
+  width: 150px;
+  justify-content: space-between;
+  margin: 0px 10px 20px;
 }
 
-.noRequest{
-    width: 20vw;
-    text-align: center;
+.noRequest {
+  width: 20vw;
+  text-align: center;
 }
 
-.requestContent{
-    width: 20vw;
-    padding: 0px 5px;
-    justify-content: space-between;
+.requestContent {
+  width: 20vw;
+  padding: 0px 5px;
+  justify-content: space-between;
 }

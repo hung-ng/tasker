@@ -1,17 +1,17 @@
-.profileLetter{
-    font-size: 50px;
+.profileLetter {
+  font-size: 50px;
 }
 
-.nameBar{
-    width: 40vw;
-    justify-content: space-between;
-    font-size: 30px;
+.nameBar {
+  width: 40vw;
+  justify-content: space-between;
+  font-size: 30px;
 }
 
-.emailBar{
-    font-size: 30px;
+.emailBar {
+  font-size: 30px;
 }
 
-.phoneBar{
-    font-size: 30px;
+.phoneBar {
+  font-size: 30px;
 }
