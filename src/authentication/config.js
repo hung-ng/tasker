@@ -3,13 +3,15 @@ import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
 
+require('dotenv').config();
+
 var firebaseConfig = {
-  apiKey: "AIzaSyBtpd8S6rveVCTJHyFRnHQUbbBGXMAMMX0",
-  authDomain: "tasker-51b4f.firebaseapp.com",
-  projectId: "tasker-51b4f",
-  storageBucket: "tasker-51b4f.appspot.com",
-  messagingSenderId: "167872023814",
-  appId: "1:167872023814:web:d86a9966aa4be586c0e287",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 export const app = firebase.initializeApp(firebaseConfig);
