@@ -22,4 +22,4 @@ This project is a Learning Management System (LMS) designed to streamline educat
 
 ## Technologies Used
 
-- React.js, Redux.js, Firebase
+React.js, Redux.js, Firebase
