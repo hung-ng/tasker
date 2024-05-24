@@ -4,6 +4,10 @@
 
 This project is a Learning Management System (LMS) designed to streamline educational processes. It includes features such as authentication, authorized roles, group management, task submission, comments with visibility settings, and real-time notifications.
 
+## Link to a sample account
+
+[Tasker](https://my-tasker-site.netlify.app/login/hungngsample@gmail.com/samplepassword)
+
 ## Features
 
 - **Authentication:** Secure user login system.
